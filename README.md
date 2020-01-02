@@ -39,4 +39,4 @@ The implementation of `Circular_Buffer` with `std::array` and indices rather tha
 
 ## Testing
 
-In `circular_buffer.cpp`, the `Circular_Buffer` class is unit tested for correctness. Tests can be compiled using the provided `Makefile`.
+In `test.cpp`, the `Circular_Buffer` class is unit tested for correctness. Tests can be compiled using the provided `Makefile`.
