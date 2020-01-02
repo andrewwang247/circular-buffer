@@ -29,6 +29,10 @@ The first and last entries in the buffer can be queried with `front` and `back`.
 
 Finally, the buffer can be converted into a `std::vector<T>` using the `range` function. This operation respects the ordering of the entries.
 
+### Searching
+
+The `contains` function returns whether or not the parameter is contained in the buffer.
+
 ### Modifiers
 
 The `pop` function requires that the buffer is non-empty. It removes the oldest entry in the buffer. The `push` function has no size requirements. If the number of entries exceeds `N`, the oldest entry is overwritten. Finally, `clear` removes everything from the buffer.
@@ -39,4 +43,4 @@ The implementation of `Circular_Buffer` with `std::array` and indices rather tha
 
 ## Testing
 
-In `test.cpp`, the `Circular_Buffer` class is unit tested for correctness. Tests can be compiled using the provided `Makefile`.
+In `test.cpp`, the `Circular_Buffer` class is unit tested for correctness and performance tested against `std::queue` on large inputs. Tests can be compiled using the provided `Makefile`.

@@ -212,6 +212,30 @@ public:
 		return data[tail - 1];
 	}
 
+	/* SEARCHING */
+
+	/**
+	 * RETURNS: whether or not the buffer contains the x.
+	 * @param x: The element to search for in this buffer.
+	 */
+	bool contains(const T& x) const {
+		// Simple empty check.
+		if ( num_entries == 0 ) return false;
+
+		// Find in raw array first.
+		auto iter = std::find( data.begin(), data.end(), x );
+		if ( iter == data.end() ) return false;
+
+		// Get the index of iter.
+		size_t index = static_cast<size_t>(iter - data.begin());
+
+		// Check that index is in the buffer.
+		if ( index == head ) return true;
+		if ( index > head ) return index < head + num_entries;
+		// So it must be the case that index < head.
+		return index < tail;
+	}
+
 	/**
 	 * Returns a vector with the entries of the buffer in order.
 	 */
