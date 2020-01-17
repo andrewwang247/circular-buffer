@@ -33,7 +33,7 @@ private:
 	 * Helper function that throw std::out_of_bounds if buffer is empty.
 	 */
 	void check_empty() const {
-		if ( num_entries == 0 ) {
+		if ( empty() ) {
 			throw std::out_of_range("Cannot access elements of empty buffer.");
 		}
 	}
@@ -220,7 +220,7 @@ public:
 	 */
 	bool contains(const T& x) const {
 		// Simple empty check.
-		if ( num_entries == 0 ) return false;
+		if ( empty() ) return false;
 
 		// Find in raw array first.
 		auto iter = std::find( data.begin(), data.end(), x );
@@ -240,7 +240,7 @@ public:
 	 * Returns a vector with the entries of the buffer in order.
 	 */
 	std::vector<T> range() const {
-		if ( num_entries == 0 ) return std::vector<T>();
+		if ( empty() ) return std::vector<T>();
 
 		std::vector<T> entries;
 		entries.reserve(num_entries);

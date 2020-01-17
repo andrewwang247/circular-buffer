@@ -7,10 +7,6 @@ DEBUG = -g3 -DDEBUG
 HEAD = circular_buffer
 EXE = test
 
-# Expand the linked file names into lists of .cpp and .o files.
-LINKED_CPP = $(foreach file, $(LINKED_FILES), $(file).cpp)
-LINKED_O = $(foreach file, $(LINKED_FILES), $(file).o)
-
 # Build optimized version.
 release : clean $(HEAD).h
 	$(CXX) $(CXX_FLAGS) $(OPT) -c $(EXE).cpp
@@ -24,4 +20,4 @@ debug : clean $(HEAD).h
 # Remove executable binary and generated objected files.
 .PHONY : clean
 clean : 
-	rm -f $(EXE) $(EXE)_debug *.o
+	rm -f $(EXE) $(EXE)_debug $(EXE).o

@@ -20,20 +20,9 @@ namespace Unit_Test {
 	bool Range_Test();
 }
 
-void print_out( const vector<short>& cont ) {
-	for ( auto x : cont ) {
-		cout << x << ' ';
-	}
-	cout << endl;
-}
-
-void print_out( queue<short>& qu ) {
-	while (!qu.empty()) {
-		cout << qu.front() << ' ';
-		qu.pop();
-	}
-	cout << endl;
-}
+// Print the items in the container.
+void print_out( const vector<short>& cont );
+void print_out( queue<short>& qu );
 
 /**
  * Read numbers in filename into a vector.
@@ -91,6 +80,21 @@ int main() {
 	cout << "BUFFER PRINTOUT: ";
 	print_out(cb.range());
 	
+}
+
+void print_out( const vector<short>& cont ) {
+	for ( auto x : cont ) {
+		cout << x << ' ';
+	}
+	cout << endl;
+}
+
+void print_out( queue<short>& qu ) {
+	while (!qu.empty()) {
+		cout << qu.front() << ' ';
+		qu.pop();
+	}
+	cout << endl;
 }
 
 bool Unit_Test::Constructor_Test() {
