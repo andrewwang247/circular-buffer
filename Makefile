@@ -8,16 +8,14 @@ HEAD = circular_buffer
 EXE = test
 
 # Build optimized version.
-release : clean $(HEAD).h
-	$(CXX) $(CXX_FLAGS) $(OPT) -c $(EXE).cpp
-	$(CXX) $(CXX_FLAGS) $(OPT) $(EXE).o -o $(EXE)
+release : $(HEAD).h
+	$(CXX) $(CXX_FLAGS) $(OPT) $(EXE).cpp -o $(EXE)
 
 # Build debugging version.
-debug : clean $(HEAD).h
-	$(CXX) $(CXX_FLAGS) $(OPT) -c $(EXE).cpp
-	$(CXX) $(CXX_FLAGS) $(OPT) $(EXE).o -o $(EXE)_debug
+debug : $(HEAD).h
+	$(CXX) $(CXX_FLAGS) $(OPT) $(EXE).cpp -o $(EXE)_debug
 
 # Remove executable binary and generated objected files.
 .PHONY : clean
 clean : 
-	rm -f $(EXE) $(EXE)_debug $(EXE).o
+	rm -f $(EXE) $(EXE)_debug *.o
