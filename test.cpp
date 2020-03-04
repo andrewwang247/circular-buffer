@@ -22,7 +22,7 @@ using std::chrono::_V2::system_clock;
 using time_unit = std::chrono::microseconds;
 
 // Buffer size used in performance testing.
-constexpr size_t BUFFER_SIZE = 100;
+constexpr size_t BUFFER_SIZE = 25;
 
 namespace Unit_Test {
 bool Constructor_Test();
