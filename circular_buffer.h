@@ -1,5 +1,7 @@
 /*
 Copyright 2020. Siwei Wang.
+
+A templated Circular Buffer.
 */
 #pragma once
 #include <algorithm>

@@ -33,9 +33,11 @@ bool Modifier_Test();
 bool Range_Test();
 }  // namespace Unit_Test
 
-// Print the items in the container.
-void print_out(const vector<__int16_t>& cont);
-void print_out(queue<__int16_t>& qu);
+/**
+ * Checks for equality of underlying elements.
+ */
+template <typename T>
+bool same_items(queue<T>& qu, const Circular_Buffer<T, BUFFER_SIZE>& cb);
 
 /**
  * Read numbers in filename into a vector.
@@ -65,7 +67,7 @@ int main() {
       Unit_Test::Access_Test,      Unit_Test::Find_Test,
       Unit_Test::Modifier_Test,    Unit_Test::Range_Test};
 
-  cout << "--- UNIT TESTS ---\n";
+  cout << "--- EXECUTING UNIT TESTS ---\n";
 
   unsigned passed = 0;
   for (auto& test : test_cases) {
@@ -76,36 +78,33 @@ int main() {
       cout << " failed.\n";
     }
   }
-  cout << "Passed " << passed << " out of " << test_cases.size() << " tests.\n"
-       << endl;
+  cout << "Passed " << passed << " out of " << test_cases.size() << " tests.\n";
+  cout << "--- FINISHED UNIT TESTS ---\n" << endl;
 
-  cout << "--- PERF TESTS ---\n";
+  cout << "--- EXECUTING PERFORMANCE TEST ---\n";
   //* Modify unit of measure to match time_unit.
   cout << "All measurements are in microseconds.\n";
 
   vector<__int16_t> num = read("numbers.txt", 30'000'000);
   auto qu = run_through(num, BUFFER_SIZE);
   auto cb = run_through(num);
+  cout << "--- FINISHED PERFORMANCE TEST ---\n" << endl;
 
-  cout << "QUEUE PRINTOUT: ";
-  print_out(qu);
-  cout << "BUFFER PRINTOUT: ";
-  print_out(cb.range());
+  cout << "--- FINAL COMPARSION CHECK ";
+  cout << (same_items(qu, cb) ? "PASSED ---\n" : "FAILED ---\n");
 }
 
-void print_out(const vector<__int16_t>& cont) {
-  for (auto x : cont) {
-    cout << x << ' ';
-  }
-  cout << endl;
-}
-
-void print_out(queue<__int16_t>& qu) {
-  while (!qu.empty()) {
-    cout << qu.front() << ' ';
+template <typename T>
+bool same_items(queue<T>& qu, const Circular_Buffer<T, BUFFER_SIZE>& cb) {
+  const size_t N = cb.size();
+  if (qu.size() != N) return false;
+  for (size_t i = 0; i < N; ++i) {
+    const T& buffer_item = cb[i];
+    const T& queue_item = qu.front();
+    if (buffer_item != queue_item) return false;
     qu.pop();
   }
-  cout << endl;
+  return true;
 }
 
 bool Unit_Test::Constructor_Test() {
