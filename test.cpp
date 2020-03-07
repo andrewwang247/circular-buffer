@@ -229,6 +229,10 @@ bool Unit_Test::Modifier_Test() {
   if (bf.front() != 16) return false;
   if (bf.back() != 16) return false;
 
+  bf.clear();
+  if (!bf.empty()) return false;
+  if (bf.size() != 0) return false;
+
   return true;
 }
 

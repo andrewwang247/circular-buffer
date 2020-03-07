@@ -67,7 +67,7 @@ class Circular_Buffer {
    *     takes only the last N elements as expected of a circular buffer.
    * @param li: The list with which to initialize the buffer.
    */
-  Circular_Buffer(const std::initializer_list<T>& li) : head(0) {
+  explicit Circular_Buffer(const std::initializer_list<T>& li) : head(0) {
     if (li.size() <= N) {
       num_entries = li.size();
       tail = (li.size() == N) ? 0 : li.size();
@@ -207,7 +207,7 @@ class Circular_Buffer {
   const T& back() const {
     check_empty();
     size_t adj_ind = (tail == 0) ? N - 1 : tail - 1;
-    return data[tail - 1];
+    return data[adj_ind];
   }
 
   /* SEARCHING */
