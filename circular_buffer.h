@@ -60,7 +60,7 @@ class Circular_Buffer {
   /**
    * Default initialized empty buffer.
    */
-  Circular_Buffer() : head(0), tail(0), num_entries(0) {}
+  Circular_Buffer() noexcept : head(0), tail(0), num_entries(0) {}
 
   /**
    * Initializer list constructor. If li has more elements than N elements,
@@ -133,14 +133,31 @@ class Circular_Buffer {
   /* ELEMENT ACCESS */
 
   /**
+   * Element access without bound checks.
+   * @param index: the entry to return.
+   */
+  T& operator[](size_t index) {
+    auto mod_index = (head + index) % N;
+    return data[mod_index];
+  }
+
+  /**
+   * Const element access without bound checks.
+   * @param index: the entry to return.
+   */
+  const T& operator[](size_t index) const {
+    auto mod_index = (head + index) % N;
+    return data[mod_index];
+  }
+
+  /**
    * Element access with bound checks.
    * @param index: the entry to return.
    * THROWS: std::out_of_range if index is invalid.
    */
   T& at(size_t index) {
     check_bounds(index);
-    size_t mod_index = (head + index) % N;
-    return data[mod_index];
+    return this->operator[](index);
   }
 
   /**
@@ -150,26 +167,7 @@ class Circular_Buffer {
    */
   const T& at(size_t index) const {
     check_bounds(index);
-    size_t mod_index = (head + index) % N;
-    return data[mod_index];
-  }
-
-  /**
-   * Element access without bound checks.
-   * @param index: the entry to return.
-   */
-  T& operator[](size_t index) {
-    size_t mod_index = (head + index) % N;
-    return data[mod_index];
-  }
-
-  /**
-   * Const element access without bound checks.
-   * @param index: the entry to return.
-   */
-  const T& operator[](size_t index) const {
-    size_t mod_index = (head + index) % N;
-    return data[mod_index];
+    return this->operator[](index);
   }
 
   /**
@@ -196,7 +194,7 @@ class Circular_Buffer {
    */
   T& back() {
     check_empty();
-    size_t adj_ind = (tail == 0) ? N - 1 : tail - 1;
+    auto adj_ind = (tail == 0) ? N - 1 : tail - 1;
     return data[adj_ind];
   }
 
@@ -206,7 +204,7 @@ class Circular_Buffer {
    */
   const T& back() const {
     check_empty();
-    size_t adj_ind = (tail == 0) ? N - 1 : tail - 1;
+    auto adj_ind = (tail == 0) ? N - 1 : tail - 1;
     return data[adj_ind];
   }
 
@@ -216,7 +214,7 @@ class Circular_Buffer {
    * RETURNS: whether or not the buffer contains the x.
    * @param x: The element to search for in this buffer.
    */
-  bool contains(const T& x) const {
+  bool contains(const T& x) const noexcept {
     // Simple empty check.
     if (empty()) return false;
 
@@ -225,7 +223,7 @@ class Circular_Buffer {
     if (iter == data.end()) return false;
 
     // Get the index of iter.
-    size_t index = static_cast<size_t>(iter - data.begin());
+    auto index = static_cast<size_t>(iter - data.begin());
 
     // Check that index is in the buffer.
     if (index == head) return true;
@@ -270,7 +268,7 @@ class Circular_Buffer {
    * Adds the item to the back of the buffer.
    * @param item: the item to add to the buffer.
    */
-  void push(const T& item) {
+  void push(const T& item) noexcept {
     data[tail] = item;
 
     tail = (tail + 1 == N) ? 0 : tail + 1;
