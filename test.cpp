@@ -18,7 +18,6 @@ using std::string;
 using std::vector;
 using std::chrono::duration_cast;
 using std::chrono::high_resolution_clock;
-using std::chrono::_V2::system_clock;
 using time_unit = std::chrono::microseconds;
 
 // Buffer size used in performance testing.
@@ -58,8 +57,8 @@ queue<__int16_t> run_through(const vector<__int16_t>& numbers, size_t buf_size);
 Circular_Buffer<__int16_t, BUFFER_SIZE> run_through(
     const vector<__int16_t>& numbers);
 
-void print_duration(system_clock::time_point start,
-                    system_clock::time_point finish);
+void print_duration(high_resolution_clock::time_point start,
+                    high_resolution_clock::time_point finish);
 
 int main() {
   vector<function<bool()> > test_cases{
@@ -290,8 +289,8 @@ Circular_Buffer<__int16_t, BUFFER_SIZE> run_through(
   return cb;
 }
 
-void print_duration(system_clock::time_point start,
-                    system_clock::time_point finish) {
+void print_duration(high_resolution_clock::time_point start,
+                    high_resolution_clock::time_point finish) {
   cout << " duration: " << duration_cast<time_unit>(finish - start).count()
        << endl;
 }
